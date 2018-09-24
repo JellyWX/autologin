@@ -1,0 +1,7 @@
+[package]
+name = "auto_login"
+version = "0.1.0"
+authors = ["jude-LafiteIII <judewrs@gmail.com>"]
+
+[dependencies]
+reqwest = "0.9.1"
