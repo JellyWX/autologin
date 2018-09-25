@@ -7,9 +7,9 @@ fn main() {
     let args: Vec<String> = env::args().collect();
 
 
-    match args.len()
+    if args.len() == 3
     {
-        3 => // Enough args: continue
+        let handle = thread::spawn(move ||
         {
             let params: [[&str; 2]; 2] = [["USERNAME", &args[1]], ["PASSWORD", &args[2]]];
 
@@ -20,17 +20,19 @@ fn main() {
 
             loop
             {
+                println!("Logging in now...");
                 login(&params, &client);
 
                 thread::sleep(time::Duration::from_secs(120));
             }
-        },
+        });
 
-        _ => { // Any other number of args: cancel
-            println!("Please provide your username and password as an argument.");
-            return;
-        }
-    };
+        handle.join().unwrap();
+    }
+
+    else { // Any other number of args: cancel
+        println!("Please provide your username and password as an argument.");
+    }
 }
 
 fn login(params: &[[&str; 2]; 2], client: &reqwest::Client)
