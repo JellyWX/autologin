@@ -13,8 +13,8 @@ fn main() {
     {
         3 => // Enough args: continue
         {
-            map.insert("USERNAME", &args[0]);
-            map.insert("PASSWORD", &args[1]);
+            map.insert("USERNAME", &args[1]);
+            map.insert("PASSWORD", &args[2]);
 
             let client = reqwest::Client::builder()
                 .danger_accept_invalid_certs(true)
