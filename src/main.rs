@@ -6,15 +6,13 @@ use std::{thread, time};
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    let mut map = HashMap::new();
 
 
     match args.len()
     {
         3 => // Enough args: continue
         {
-            map.insert("USERNAME", &args[1]);
-            map.insert("PASSWORD", &args[2]);
+            let params = [("USERNAME", &args[1]), ("PASSWORD", &args[2])];
 
             let client = reqwest::Client::builder()
                 .danger_accept_invalid_certs(true)
@@ -24,7 +22,7 @@ fn main() {
             loop
             {
                 let res = client.post("https://smoothwall.chhs.org.uk:442/clogin")
-                    .json(&map)
+                    .form(&params)
                     .send();
 
                 match res
